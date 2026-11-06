@@ -20,14 +20,18 @@ button { touch-action: manipulation; }
 .spHi { animation: spHi 1.2s ease 2; }
 
 /* ===== Modo apresentação ===== */
-.present { position: fixed; inset: 0; z-index: 1500; background: #0a0f0d; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 24px; text-align: center; }
+.present { position: fixed; inset: 0; z-index: 1500; background: #0a0f0d; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 24px; text-align: center; overflow-y: auto; }
 .present .pTag { background: rgba(0,224,138,0.14); border: 1px solid rgba(0,224,138,0.45); color: #00e08a; font-weight: 800; font-size: 14px; letter-spacing: .08em; padding: 6px 14px; border-radius: 999px; }
 .present h2 { font-family: Sora, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 54px); line-height: 1.1; color: #f2f7f4; margin: 0; }
 .present h2 span { color: #00e08a; }
-.present .pQr { background: #fff; padding: clamp(14px, 2.4vmin, 28px); border-radius: 22px; width: min(62vmin, 520px); height: min(62vmin, 520px); box-shadow: 0 0 80px rgba(0,224,138,0.18); }
+.present .pQr { background: #fff; padding: clamp(14px, 2.4vmin, 28px); border-radius: 22px; width: min(52vmin, 480px); height: min(52vmin, 480px); box-shadow: 0 0 80px rgba(0,224,138,0.18); }
 .present .pQr svg { width: 100%; height: 100%; display: block; }
 .present .pMsg { font-size: clamp(16px, 2.4vw, 26px); font-weight: 700; color: #f2f7f4; margin: 0; }
-.present .pUrl { font-size: clamp(13px, 1.8vw, 20px); color: #8d9a93; margin: 0; word-break: break-all; }
+.present .pGame { display: flex; align-items: center; gap: 14px; max-width: min(92vw, 820px); background: rgba(0,224,138,0.1); border: 1px solid rgba(0,224,138,0.4); border-radius: 18px; padding: 12px 20px; text-align: left; }
+.present .pGameTag { flex: none; background: #00e08a; color: #06110c; font-weight: 800; font-size: clamp(11px, 1.3vw, 15px); letter-spacing: .06em; padding: 6px 12px; border-radius: 999px; }
+.present .pGame p { margin: 0; font-size: clamp(14px, 1.9vw, 21px); line-height: 1.4; color: #e6efea; }
+.present .pGame b { color: #00e08a; }
+@media (max-width: 560px) { .present .pGame { flex-direction: column; text-align: center; gap: 8px; } }
 .present .pClose { position: absolute; top: 14px; right: 14px; }
 
 /* ===== Hub de jogos ===== */

@@ -1,6 +1,6 @@
 /* Service worker do site Biodiversidade Urbana (TCC 2026).
    NÃO edite o arquivo sw.js à mão: ele é gerado por tools/gerar_sw.py a partir deste modelo. */
-const CACHE = 'biodiv-583aa9fcff';
+const CACHE = 'biodiv-5fc9e6b00d';
 const ASSETS = [
   "./",
   "index.html",

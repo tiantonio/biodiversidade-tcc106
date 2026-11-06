@@ -93,7 +93,8 @@
       '<h2>Vida entre o <span>Concreto</span> e o Asfalto</h2>' +
       '<div class="pQr" role="img" aria-label="QR code para abrir o site">' + qrSvg(url) + '</div>' +
       '<p class="pMsg">Aponte a câmera do celular e explore a biodiversidade da Via Cambuí</p>' +
-      '<p class="pUrl">' + escHtml(url.replace(/^https?:\/\//, '').replace(/\/$/, '')) + '</p>';
+      '<div class="pGame"><span class="pGameTag">JOGUE TAMBÉM</span>' +
+      '<p>Tem jogos no site! Teste seus conhecimentos no quiz <b>“Quem sou eu?”</b> e ajude um animal a atravessar a rodovia na <b>“Travessia Segura”</b>.</p></div>';
     document.body.appendChild(presentEl);
     document.body.style.overflow = 'hidden';
     var btn = presentEl.querySelector('.pClose');
