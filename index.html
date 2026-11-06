@@ -2642,7 +2642,7 @@ var qrcode = function() {
 
 </script>
 <script>
-const state = { page: 'home', filter: 'all', expandedId: null };
+const state = { page: 'home', filter: 'all', expandedId: null, playing: null };
 
 const species = [
   { id:'leucena', img:window.__resources.img___species_images_image15_png, category:'FLORA • ÁRVORE', type:'flora', name:'Leucena', sci:'Leucaena leucocephala', short:'Espécie exótica invasora muito comum em áreas urbanas degradadas.', classification:'Nome comum: Leucena · Localização: próximo à faculdade da cidade', long:'É uma espécie exótica invasora muito comum em áreas urbanas degradadas. Embora seja nutritiva para o gado, sua disseminação descontrolada pode sufocar a vegetação nativa local. Suas sementes ficam contidas em vagens verdes que escurecem ao amadurecer.' },
@@ -2662,6 +2662,36 @@ const species = [
   { id:'libelula', img:window.__resources.img___species_images_image18_jpg, category:'FAUNA • INSETO', type:'fauna', name:'Libélula vermelha', sci:'Infraordem Anisoptera', short:'Visão de quase 360° com até 30.000 lentes por olho.', classification:'Nome comum: Libélula, lavadeira, jacinta, helicóptero, lavandeira, vaga-lume-do-dia', long:'Seu tamanho varia de 4 cm a 7 cm de comprimento corporal, com envergadura de asas entre 5 cm e 9 cm. Possuem olhos compostos gigantescos formados por até 30.000 omatídeos (lentes), o que garante uma visão de quase 360 graus, e passam a maior parte da vida como ninfas dentro da água, onde também são predadoras ativas, antes de passarem pela metamorfose e se tornarem adultas aladas.' },
   { id:'coruja', img:window.__resources.img___species_images_image7_png, category:'FAUNA • AVE', type:'fauna', name:'Coruja-buraqueira', sci:'Athene cunicularia', short:'Vive em buracos no solo, ativa também durante o dia.', classification:'Nome comum: Coruja-buraqueira, coruja-do-campo, urucureá, corujinha-do-chão', long:'Possuem entre 21 cm e 26 cm de altura, com envergadura de asas de aproximadamente 50 cm a 60 cm. É uma das poucas espécies de coruja que fica bastante ativa durante o dia, embora prefira caçar ao amanhecer, ao entardecer e à noite. Ao contrário de outras corujas que vivem no topo de árvores, a buraqueira vive em buracos no solo — frequentemente cavados por elas mesmas ou abandonados por outros animais (como tatu-bola ou roedores).' },
 ];
+
+const LIC_URL = 'https://creativecommons.org/licenses/by-nc-sa/4.0/';
+const speciesAudio = {
+  andorinha: { src:'audio/andorinha.mp3', author:'Caio Brito',                  xc:'427864'  },
+  suiriri:   { src:'audio/suiriri.mp3',   author:'Jayrson Araujo de Oliveira',  xc:'1182983' },
+  coruja:    { src:'audio/coruja.mp3',    author:'Douglas Meyer',               xc:'323491'  }
+};
+let audioEl = null;
+function stopAudio(){ if (audioEl){ audioEl.pause(); audioEl = null; } state.playing = null; }
+function toggleAudio(id){
+  if (state.playing === id){ stopAudio(); render(); return; }
+  stopAudio();
+  const a = speciesAudio[id]; if (!a) return;
+  audioEl = new Audio(a.src);
+  audioEl.addEventListener('ended', ()=>{ if (state.playing===id){ stopAudio(); render(); } });
+  audioEl.addEventListener('error', ()=>{ if (state.playing===id){ stopAudio(); render(); } });
+  state.playing = id; render();
+  audioEl.play().catch(()=>{ stopAudio(); render(); });
+}
+function audioBlock(sp){
+  const a = speciesAudio[sp.id]; if (!a) return '';
+  const on = state.playing === sp.id;
+  const icon = on
+    ? '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2.5" width="3.4" height="11" rx="1"/><rect x="9.6" y="2.5" width="3.4" height="11" rx="1"/></svg>'
+    : '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.6v10.8a.6.6 0 0 0 .92.5l8.4-5.4a.6.6 0 0 0 0-1L4.92 2.1A.6.6 0 0 0 4 2.6z"/></svg>';
+  return '<div style="margin:0 0 14px;">'
+    + '<button data-audio="'+sp.id+'" aria-label="'+(on?'Pausar':'Ouvir')+' o som de '+sp.name+'" style="display:inline-flex;align-items:center;gap:8px;background:'+(on?'#00e08a':'rgba(0,224,138,0.12)')+';border:1px solid rgba(0,224,138,0.4);color:'+(on?'#06110c':'#00e08a')+';font-weight:800;font-size:13px;padding:7px 14px 7px 11px;border-radius:999px;cursor:pointer;">'+icon+(on?'Tocando…':'Ouvir o som')+'</button>'
+    + '<p style="font-size:11px;line-height:1.5;color:#647069;margin:8px 0 0;">Gravação: '+a.author+' · <a href="https://xeno-canto.org/'+a.xc+'" target="_blank" rel="noopener" style="color:#7f8b85;text-decoration:underline;">XC'+a.xc+'</a> · <a href="'+LIC_URL+'" target="_blank" rel="noopener" style="color:#7f8b85;text-decoration:underline;">CC BY-NC-SA 4.0</a> · Xeno-canto</p>'
+    + '</div>';
+}
 
 const team = [
   { name:'Arthur Tomeu', role:'Líder', desc:'Coordena o planejamento geral do projeto e o cronograma das etapas de pesquisa.', handle:'@arthur_tomeu', ig:'https://www.instagram.com/arthur_tomeu/', img:window.__resources.img___team_images_arthur_tomeu_jpeg, pos:'center 15%' },
@@ -2783,6 +2813,7 @@ function renderSpecies(){
         + '<h3 style="font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:#f2f7f4;margin:0 0 2px;">'+sp.name+'</h3>'
         + '<p style="font-size:12.5px;font-style:italic;color:#7f8b85;margin:0 0 10px;">'+sp.sci+'</p>'
         + '<p style="font-size:14px;line-height:1.6;color:#a9b5af;margin:0 0 14px;">'+sp.short+'</p>'
+        + audioBlock(sp)
         + (expanded
           ? '<div style="border-top:1px solid rgba(0,224,138,0.15);margin-top:6px;padding-top:16px;">'
             + '<p style="font-size:12px;font-weight:800;letter-spacing:0.05em;color:#00e08a;margin:0 0 6px;">CLASSIFICAÇÃO</p>'
@@ -2823,9 +2854,11 @@ function render(){
 
 document.body.addEventListener('click', e => {
   const nav = e.target.closest('[data-nav]');
-  if (nav){ state.page = nav.dataset.nav; render(); return; }
+  if (nav){ stopAudio(); state.page = nav.dataset.nav; render(); return; }
   const filter = e.target.closest('[data-filter]');
   if (filter){ state.filter = filter.dataset.filter; render(); return; }
+  const aud = e.target.closest('[data-audio]');
+  if (aud){ toggleAudio(aud.dataset.audio); return; }
   const toggle = e.target.closest('[data-toggle]');
   if (toggle){ state.expandedId = state.expandedId===toggle.dataset.toggle ? null : toggle.dataset.toggle; render(); return; }
 });
