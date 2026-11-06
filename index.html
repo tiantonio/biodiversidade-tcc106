@@ -2675,11 +2675,12 @@ const team = [
 ];
 
 const gallery = [
-  'Trecho inicial da Via Cambuí — Mar/2026','Canteiro central, próximo ao colégio — Mar/2026',
-  'Talude marginal com vegetação espontânea — Abr/2026','Área de amostragem de aves — Abr/2026',
-  'Registro de espécie arbórea — Mai/2026','Coleta de dados em campo — Mai/2026',
-  'Ponto de observação de insetos — Jun/2026','Equipe durante saída de campo — Jun/2026',
-].map((caption,i)=>({ id:'gal-'+i, caption }));
+  { id:'gal-0', img:'images/galeria-equipe.webp', pos:'center 30%', caption:"Equipe do projeto reunida" },
+  { id:'gal-1', img:'images/galeria-percurso.webp', pos:'center 60%', caption:"Percurso a pé pelo trecho de estudo" },
+  { id:'gal-2', img:'images/galeria-talude.webp', pos:'center 45%', caption:"Observação do talude com vegetação espontânea" },
+  { id:'gal-3', img:'images/galeria-placa-cachorro-do-mato.webp', pos:'center 35%', caption:"Placa de travessia de animais: cachorro-do-mato (Cerdocyon thous)" },
+  { id:'gal-4', img:'images/galeria-registro-fotografico.webp', pos:'center 55%', caption:"Registro fotográfico durante a coleta de dados" }
+];
 
 const navDefs = [ ['home','Início'], ['mapping','Mapeamento'], ['species','Espécies'], ['team','Equipe'] ];
 
@@ -2751,9 +2752,9 @@ function renderMapping(){
     + '<div style="background:#101613;border:1px solid rgba(0,224,138,0.15);border-radius:16px;padding:26px;"><h3 style="font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:#00e08a;margin:0 0 10px;">Validação Técnica</h3><p style="font-size:14.5px;line-height:1.65;color:#a9b5af;margin:0;">Todo material coletado passa por um processo de conferência com apoio de bibliografia especializada e, quando necessário, consulta a especialistas e orientadores. Essa etapa assegura a correta identificação taxonômica das espécies registradas e a confiabilidade dos dados que embasam as conclusões apresentadas no trabalho de conclusão de curso.</p></div>'
     + '</div>'
     + '<h2 style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;color:#f2f7f4;margin:0 0 18px;">Galeria de Coletas</h2>'
-    + '<div class="galleryGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">'
+    + '<div class="galleryGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">'
     + gallery.map(g=>'<figure style="margin:0;background:#101613;border:1px solid rgba(0,224,138,0.15);border-radius:16px;overflow:hidden;">'
-      + '<div style="height:150px;">'+imgSlot(g.id,'Foto da coleta')+'</div>'
+      + '<div style="aspect-ratio:4/5;background:#161d19;"><img src="'+g.img+'" alt="'+g.caption+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:'+g.pos+';display:block;"></div>'
       + '<figcaption style="padding:12px 14px;font-size:12.5px;color:#9aa6a0;line-height:1.4;">'+g.caption+'</figcaption></figure>').join('')
     + '</div></section>';
 }
