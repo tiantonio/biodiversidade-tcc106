@@ -2726,7 +2726,7 @@ const gallery = [
   { id:'gal-6', img:'images/galeria-dia2-analise-flora.webp', pos:'center 35%', tag:"DIA 2", caption:"Análise da flora" },
   { id:'gal-7', img:'images/galeria-dia2-canteiro-em-frente-igreja.webp', pos:'center 45%', tag:"DIA 2", caption:"Canteiro em frente à igreja" },
   { id:'gal-8', img:'images/galeria-dia2-coleta-colegio.webp', pos:'center 40%', tag:"DIA 2", caption:"Coleta no colégio" },
-  { id:'gal-9', img:'images/galeria-dia2-em-torno-templos-igreja.webp', pos:'center 40%', tag:"DIA 2", caption:"Em torno dos templos da igreja" },
+  { id:'gal-9', img:'images/galeria-dia2-em-torno-templos-igreja-2.webp', fit:'contain', pos:'center 40%', tag:"DIA 2", caption:"Em torno dos templos da igreja" },
   { id:'gal-10', img:'images/galeria-bastidores-gravacao-instagram.webp', pos:'center 30%', tag:"BASTIDORES", caption:"Gravação para o Instagram do grupo" }
 ];
 
@@ -2802,7 +2802,9 @@ function renderMapping(){
     + '<h2 style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;color:#f2f7f4;margin:0 0 18px;">Galeria de Coletas</h2>'
     + '<div class="galleryGrid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">'
     + gallery.map(g=>'<figure class="galleryItem" style="margin:0;background:#101613;border:1px solid rgba(0,224,138,0.15);border-radius:16px;overflow:hidden;flex:0 0 calc((100% - 48px)/4);">'
-      + '<div style="aspect-ratio:4/5;background:#161d19;"><img src="'+g.img+'" alt="'+g.caption+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:'+g.pos+';display:block;"></div>'
+      + '<div style="aspect-ratio:4/5;background:#161d19;position:relative;overflow:hidden;">'+(g.fit==='contain'
+        ? '<img src="'+g.img+'" alt="" aria-hidden="true" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(0.55);transform:scale(1.2);"><img src="'+g.img+'" alt="'+g.caption+'" loading="lazy" style="position:relative;width:100%;height:100%;object-fit:contain;display:block;">'
+        : '<img src="'+g.img+'" alt="'+g.caption+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:'+g.pos+';display:block;">')+'</div>'
       + '<figcaption style="padding:14px 16px 16px;"><span style="display:inline-block;background:rgba(0,224,138,0.12);color:#00e08a;font-size:11px;font-weight:800;letter-spacing:0.06em;padding:4px 10px;border-radius:999px;margin-bottom:10px;">'+g.tag+'</span>'
       + '<div style="font-size:13.5px;color:#b7c2bc;line-height:1.45;">'+g.caption+'</div></figcaption></figure>').join('')
     + '</div></section>';
