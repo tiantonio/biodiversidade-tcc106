@@ -289,13 +289,13 @@
     .grid2 { grid-template-columns:1fr !important; }
     .teamGrid { grid-template-columns:1fr 1fr !important; }
     .speciesGrid { grid-template-columns:1fr !important; }
-    .galleryGrid { grid-template-columns:1fr 1fr !important; }
+    .galleryItem { flex-basis:calc((100% - 16px)/2) !important; }
     .navRow { flex-wrap:wrap !important; gap:8px !important; }
     .heroTitle { font-size:34px !important; }
   }
   @media (max-width: 560px) {
     .teamGrid { grid-template-columns:1fr !important; }
-    .galleryGrid { grid-template-columns:1fr !important; }
+    .galleryItem { flex-basis:100% !important; }
   }
 </style>
 
@@ -2675,11 +2675,17 @@ const team = [
 ];
 
 const gallery = [
-  { id:'gal-0', img:'images/galeria-equipe.webp', pos:'center 30%', caption:"Equipe do projeto reunida" },
-  { id:'gal-1', img:'images/galeria-percurso.webp', pos:'center 60%', caption:"Percurso a pé pelo trecho de estudo" },
-  { id:'gal-2', img:'images/galeria-talude.webp', pos:'center 45%', caption:"Observação do talude com vegetação espontânea" },
-  { id:'gal-3', img:'images/galeria-placa-cachorro-do-mato.webp', pos:'center 35%', caption:"Placa de travessia de animais: cachorro-do-mato (Cerdocyon thous)" },
-  { id:'gal-4', img:'images/galeria-registro-fotografico.webp', pos:'center 55%', caption:"Registro fotográfico durante a coleta de dados" }
+  { id:'gal-0', img:'images/galeria-dia1-inicio.webp', pos:'center 60%', tag:"DIA 1", caption:"Início da saída de campo" },
+  { id:'gal-1', img:'images/galeria-dia1-analise-fauna-via-cambui.webp', pos:'center 45%', tag:"DIA 1", caption:"Análise da fauna na Via Cambuí" },
+  { id:'gal-2', img:'images/galeria-dia1-placa-cachorro-do-mato.webp', pos:'center 35%', tag:"DIA 1", caption:"Placa de sinalização: cachorro-do-mato (Cerdocyon thous)" },
+  { id:'gal-3', img:'images/galeria-dia1-placa-lobo-guara.webp', pos:'center 35%', tag:"DIA 1", caption:"Placa de sinalização: lobo-guará (Chrysocyon brachyurus)" },
+  { id:'gal-4', img:'images/galeria-dia1-registro-fauna-cupim.webp', pos:'center 40%', tag:"DIA 1", caption:"Registro da fauna: cupinzeiro" },
+  { id:'gal-5', img:'images/galeria-dia1-coleta-canteiro-colegio.webp', pos:'center 55%', tag:"DIA 1", caption:"Coleta no canteiro do colégio" },
+  { id:'gal-6', img:'images/galeria-dia2-analise-flora.webp', pos:'center 35%', tag:"DIA 2", caption:"Análise da flora" },
+  { id:'gal-7', img:'images/galeria-dia2-canteiro-em-frente-igreja.webp', pos:'center 45%', tag:"DIA 2", caption:"Canteiro em frente à igreja" },
+  { id:'gal-8', img:'images/galeria-dia2-coleta-colegio.webp', pos:'center 40%', tag:"DIA 2", caption:"Coleta no colégio" },
+  { id:'gal-9', img:'images/galeria-dia2-em-torno-templos-igreja.webp', pos:'center 40%', tag:"DIA 2", caption:"Em torno dos templos da igreja" },
+  { id:'gal-10', img:'images/galeria-bastidores-gravacao-instagram.webp', pos:'center 30%', tag:"BASTIDORES", caption:"Gravação para o Instagram do grupo" }
 ];
 
 const navDefs = [ ['home','Início'], ['mapping','Mapeamento'], ['species','Espécies'], ['team','Equipe'] ];
@@ -2752,10 +2758,11 @@ function renderMapping(){
     + '<div style="background:#101613;border:1px solid rgba(0,224,138,0.15);border-radius:16px;padding:26px;"><h3 style="font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:#00e08a;margin:0 0 10px;">Validação Técnica</h3><p style="font-size:14.5px;line-height:1.65;color:#a9b5af;margin:0;">Todo material coletado passa por um processo de conferência com apoio de bibliografia especializada e, quando necessário, consulta a especialistas e orientadores. Essa etapa assegura a correta identificação taxonômica das espécies registradas e a confiabilidade dos dados que embasam as conclusões apresentadas no trabalho de conclusão de curso.</p></div>'
     + '</div>'
     + '<h2 style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;color:#f2f7f4;margin:0 0 18px;">Galeria de Coletas</h2>'
-    + '<div class="galleryGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">'
-    + gallery.map(g=>'<figure style="margin:0;background:#101613;border:1px solid rgba(0,224,138,0.15);border-radius:16px;overflow:hidden;">'
+    + '<div class="galleryGrid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">'
+    + gallery.map(g=>'<figure class="galleryItem" style="margin:0;background:#101613;border:1px solid rgba(0,224,138,0.15);border-radius:16px;overflow:hidden;flex:0 0 calc((100% - 48px)/4);">'
       + '<div style="aspect-ratio:4/5;background:#161d19;"><img src="'+g.img+'" alt="'+g.caption+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:'+g.pos+';display:block;"></div>'
-      + '<figcaption style="padding:12px 14px;font-size:12.5px;color:#9aa6a0;line-height:1.4;">'+g.caption+'</figcaption></figure>').join('')
+      + '<figcaption style="padding:14px 16px 16px;"><span style="display:inline-block;background:rgba(0,224,138,0.12);color:#00e08a;font-size:11px;font-weight:800;letter-spacing:0.06em;padding:4px 10px;border-radius:999px;margin-bottom:10px;">'+g.tag+'</span>'
+      + '<div style="font-size:13.5px;color:#b7c2bc;line-height:1.45;">'+g.caption+'</div></figcaption></figure>').join('')
     + '</div></section>';
 }
 
